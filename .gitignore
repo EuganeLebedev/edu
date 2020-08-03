@@ -1,2 +1,3 @@
 /.venv/
 /*.pyc
+/edu/db.sqlite3
