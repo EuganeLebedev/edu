@@ -7,6 +7,10 @@
 {% block body %}
     {% for post in news %}
         {{ post.title }}<br>
+
+        {% if post.title_image %}
+        <img src="{{ post.title_image.url }}" alt="imgage" >
+        {% endif %}
         {{ post.content|safe }}
     {% endfor %}
 {% endblock %}
