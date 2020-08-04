@@ -1,11 +1,16 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from index.models import NewsModel
 
 
 class NewsCreateView(CreateView):
     model = NewsModel
-    fields = ['title', 'content']
+    fields = ['title', 'title_image', 'content']
+    template_name = 'content_admin/news_create.html'
+
+class NewsUpdateView(UpdateView):
+    model = NewsModel
+    fields = ['title', 'title_image', 'content']
     template_name = 'content_admin/news_create.html'
