@@ -1,0 +1,14 @@
+{% extends 'index/base.html'%}
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+{% block body %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <input type="submit" value="Ok">
+    </form>
+{% endblock %}

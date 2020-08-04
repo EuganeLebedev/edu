@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'index.apps.IndexConfig',
+    'content_admin.apps.ContentAdminConfig',
     'debug_toolbar',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [

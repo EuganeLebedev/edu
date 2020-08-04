@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.conf import settings
 from django.urls import path, include
 from index import urls as index_urls
+from content_admin import urls as content_admin_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(index_urls))
+    path('', include(index_urls)),
+    path('cadm/', include(content_admin_urls)),
 ]
 
 
