@@ -1,12 +1,11 @@
 {% extends 'index/base.html'%}
 
 {% block title %}
-Главная страница
+Удалить новость
 {% endblock %}
 
 {% block body %}
-{% include 'index/navbar.html' %}}
-{% debug %}}
+{% debug %}
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.media }}
