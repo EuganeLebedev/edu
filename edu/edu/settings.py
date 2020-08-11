@@ -40,8 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'index.apps.IndexConfig',
+    'courses.apps.CoursesConfig',
     'content_admin.apps.ContentAdminConfig',
+
     'debug_toolbar',
     'ckeditor',
 ]

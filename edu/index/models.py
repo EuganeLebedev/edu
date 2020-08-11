@@ -24,3 +24,4 @@ class NewsModel(models.Model):
     class Meta():
         verbose_name = 'news'
         verbose_name_plural = 'news'
+
