@@ -19,11 +19,13 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from index import urls as index_urls
 from content_admin import urls as content_admin_urls
+from courses import urls as courses_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(index_urls)),
     path('cadm/', include(content_admin_urls)),
+    path('courses/', include(courses_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
