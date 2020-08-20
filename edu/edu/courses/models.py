@@ -22,8 +22,10 @@ class Subject(CourseAbstractModel):
 
 class Course(CourseAbstractModel):
 
+    title_image = models.ImageField(upload_to='courses_titles', default='courses_titles/empty.png')
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     overview = RichTextField(blank=True, null=True)
+
 
 
 class Module(CourseAbstractModel):
