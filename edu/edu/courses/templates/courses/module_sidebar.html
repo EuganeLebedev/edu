@@ -1,0 +1,20 @@
+
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Модули курса </div>
+      <div class="list-group list-group-flush">
+          {% for module in course.module_set.all %}
+              <a href="#" class="list-group-item list-group-item-action bg-light">{{ module }}</a>
+          {% endfor %}
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+
+    <!-- /#page-content-wrapper -->
+
+
+
+
