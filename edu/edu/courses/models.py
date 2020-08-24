@@ -39,6 +39,9 @@ class ModuleTest(CourseAbstractModel):
 
     module = models.OneToOneField(Module, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 
 class Question(models.Model):
 

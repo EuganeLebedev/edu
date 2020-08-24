@@ -24,6 +24,8 @@ class ModuleAdmin(admin.ModelAdmin):
 @admin.register(models.ModuleTest)
 class ModuleTestAdmin(admin.ModelAdmin):
     list_display = ['id', 'module']
+    prepopulated_fields = {'slug': ('title', ) }
+
 
 
 @admin.register(models.Question)

@@ -9,6 +9,11 @@
                   {% if class_module == module %}disabled{% endif %}">
                   {{ class_module }}
               </a>
+          {% if class_module.moduletest %}
+              <a href="#" class="list-group-item list-group-item-action bg-light">{{ class_module.moduletest.title }}
+              <span class="badge badge-primary badge-pill">not passed</span>
+              </a>
+          {% endif %}
           {% endfor %}
       </div>
     </div>
