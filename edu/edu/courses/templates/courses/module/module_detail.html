@@ -1,0 +1,49 @@
+{% extends 'index/base.html'%}
+
+{% block title %}
+{{ course.title }}
+
+{% endblock %}
+
+
+{% block body %}
+{% with course=module.course %}
+  <div class="d-flex" id="wrapper">
+{% include 'courses/module_sidebar.html' %}
+       <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Содержимое</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <h1 class="mt-4">
+            {{ module.title }}</h1>
+          {{ module.content|safe }}
+
+      </div>
+    </div>
+{% endwith %}
+
+{% endblock %}
+
+  </div>
+
+
+{% block scriptarea %}
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+{% endblock %}

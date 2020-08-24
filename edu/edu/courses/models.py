@@ -32,6 +32,7 @@ class Module(CourseAbstractModel):
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     description = RichTextField(blank=True, null=True)
+    content = RichTextField(blank=True, null=True)
 
 
 class ModuleTest(CourseAbstractModel):

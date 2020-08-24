@@ -4,8 +4,11 @@
     <div class="bg-light border-right" id="sidebar-wrapper">
       <div class="sidebar-heading">Модули курса </div>
       <div class="list-group list-group-flush">
-          {% for module in course.module_set.all %}
-              <a href="#" class="list-group-item list-group-item-action bg-light">{{ module }}</a>
+          {% for class_module in course.module_set.all %}
+              <a href="{% url 'courses:module_detail' class_module.id %}" class="list-group-item list-group-item-action bg-light
+                  {% if class_module == module %}disabled{% endif %}">
+                  {{ class_module }}
+              </a>
           {% endfor %}
       </div>
     </div>
