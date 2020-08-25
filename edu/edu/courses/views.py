@@ -23,5 +23,7 @@ class ModuleDetailView(DetailView):
 
 
 class ModuleTestDetailView(DetailView):
-    model = models.Module
+    model = models.ModuleTest
     template_name = 'courses/module/module_test_detail.html'
+    context_object_name = 'test'
+
