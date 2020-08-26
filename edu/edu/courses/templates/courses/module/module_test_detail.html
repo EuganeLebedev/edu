@@ -1,5 +1,7 @@
 {% extends 'index/base.html'%}
 
+{% load static %}
+
 {% block title %}
 {{ course.title }}
 
@@ -28,18 +30,39 @@
         <h1 class="mt-4">
             {{ test.title }}</h1>
           <hr>
-
+    {% csrf_token %}
           {% for question in test.question_set.all %}
-               {{ question.question }}
-                {% for answer in question.answer_set.all %}
-                    {{ answer.answer }}
-                {% endfor %}
-          {% endfor %}
 
+          {{ question.question }}
+            {% for answer in question.answer_set.all %} <br>
+
+              <form action="" method="post">
+                  <div class="{{ question.id }}">
+                      <input type="hidden" name="question_{{ question.id }}_id" value="{{ question.id }}">
+
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                          <label class="form-check-label" for="exampleRadios1">{{ answer.answer }}</label>
+                      </div>
+                      {% endfor %}
+                      <input type="text" id="my_text_id" name="my_text_name">
+                      <input id="my_value" name="my_value_name" value="value_from-my_value">
+                      <button type="button" class="btn btn-success btn-lg answer">GET</button>
+                  </div>
+              </form>
+              {% endfor %}
+
+          <input class="btn btn-primary" type="submit" value="Отправить">
 
       </div>
     </div>
 {% endwith %}
+
+      <form action="" method="post">
+          <ul id="seconds">
+
+          </ul>
+      </form>
 
 {% endblock %}
 
@@ -54,4 +77,8 @@
       $("#wrapper").toggleClass("toggled");
     });
   </script>
+
+<script src="{% static 'js/main.js' %}"></script>
+
+
 {% endblock %}
