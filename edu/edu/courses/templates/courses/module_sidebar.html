@@ -1,22 +1,25 @@
 
 
     <!-- Sidebar -->
+
+    {% if course.module_set %}
     <div class="bg-light border-right" id="sidebar-wrapper">
       <div class="sidebar-heading">Модули курса </div>
       <div class="list-group list-group-flush">
-          {% for class_module in course.module_set.all %}
-              <a href="{% url 'courses:module_detail' class_module.id %}" class="list-group-item list-group-item-action bg-light
-                  {% if class_module == module %}disabled{% endif %}">
-                  {{ class_module }}
-              </a>
-          {% if class_module.moduletest %}
-              <a href="{% url 'courses:module_test' class_module.moduletest.id %}" class="list-group-item list-group-item-action bg-light">{{ class_module.moduletest.title }}
-              <span class="badge badge-primary badge-pill">not passed</span>
-              </a>
-          {% endif %}
-          {% endfor %}
+              {% for class_module in course.module_set.all %}
+                  <a href="{% url 'courses:module_detail' class_module.id %}" class="list-group-item list-group-item-action bg-light
+                      {% if class_module == module %}disabled{% endif %}">
+                      {{ class_module }}
+                  </a>
+              {% if class_module.moduletest %}
+                  <a href="{% url 'courses:module_test' class_module.moduletest.id %}" class="list-group-item list-group-item-action bg-light">{{ class_module.moduletest.title }}
+                  <span class="badge badge-primary badge-pill">not passed</span>
+                  </a>
+              {% endif %}
+              {% endfor %}
       </div>
     </div>
+    {% endif %}
     <!-- /#sidebar-wrapper -->
 
     <!-- Page Content -->
