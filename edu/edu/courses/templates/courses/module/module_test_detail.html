@@ -36,14 +36,18 @@
           {{ question.question }}
           <form action="" method="post">
                   <div class="container">
-                      {% for answer in question.answer_set.all %} <br>
+                      <ul id="test-id">
+                          {% for answer in question.answer_set.all %}
+                            <li class="t1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                    <label class="form-check-label" for="exampleRadios1">{{ answer.answer }}</label>
+                                </div>
+                            </li>
+                          {% endfor %}
 
-                          <div class="form-check">
-                              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                              <label class="form-check-label" for="exampleRadios1">{{ answer.answer }}</label>
-                          </div>
+                      </ul>
 
-                      {% endfor %}
                       <button type="button" class="btn btn-success btn-lg answer">GET</button>
                   </div>
           </form>
