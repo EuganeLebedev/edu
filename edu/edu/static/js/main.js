@@ -13,7 +13,8 @@ $(document).ready(function(){
             //$(this).children('input').prop('nodeName') ;
             //my_list += $(this).children('input[name="question_id"]').prop('nodeName') ;
             //my_list += ':' + $(this).children('label').prop('nodeName') + '\n';
-            answer_list.push(JSON.stringify(my_answer))
+            answer_list.push(my_answer);
+
 
         });
         $.ajax({
@@ -21,7 +22,7 @@ $(document).ready(function(){
             type: 'get',
             data: {
                 button_text: $(this).text(),
-                answer_list:  answer_list
+                my_answer_list: JSON.stringify(answer_list)
             },
             success: function(response) {
                 $(this).text(response.seconds)

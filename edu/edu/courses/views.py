@@ -1,6 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.generic import DetailView, ListView
+import json
 
 from . import models
 
@@ -29,12 +30,14 @@ class ModuleTestDetailView(DetailView):
     context_object_name = 'test'
 
     def get(self, request, *args, **kwargs):
-        print('hello from get!')
 
         if request.is_ajax():
             text = request.GET.get('button_text')
             print('IS AJAX')
-            print(request.GET.get('answer_list'))
+            print(text)
+            print(request.GET.get('my_answer_list'))
+            answer_list = json.loads(request.GET.get('my_answer_list'))
+            print('Answer', answer_list)
             return JsonResponse({'seconds': 1}, status=200)
 
         return super().get(request, *args, **kwargs)
