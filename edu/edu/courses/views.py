@@ -34,7 +34,7 @@ class ModuleTestDetailView(DetailView):
         if request.is_ajax():
             text = request.GET.get('button_text')
             print('IS AJAX')
-            print(request.GET.get('answer_id'))
+            print(request.GET.get('answer_list'))
             return JsonResponse({'seconds': 1}, status=200)
 
         return super().get(request, *args, **kwargs)
