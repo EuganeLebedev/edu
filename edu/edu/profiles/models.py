@@ -4,4 +4,5 @@ from django.db import models
 # Create your models here.
 
 class UserModel(AbstractUser):
-    pass
+    #TODO Make many to many dependancy to group
+    group_code = models.CharField(max_length=50, null=True, blank=True)
