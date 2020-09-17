@@ -1,0 +1,21 @@
+{% extends 'index/base.html'%}
+
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+{% block body %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form|crispy }}
+        {% if form.id %}
+        <input type="submit" class="btn btn-primary" value="Update">
+        {% else %}
+        <input type="submit" class="btn btn-primary" value="Create">
+        {% endif %}
+    </form>
+{% endblock %}

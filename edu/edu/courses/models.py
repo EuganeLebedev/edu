@@ -1,7 +1,9 @@
 from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.db import models
 from django.conf import settings
+from django.template.defaultfilters import slugify
 # Create your models here.
 
 class CourseAbstractModel(models.Model):
@@ -10,6 +12,11 @@ class CourseAbstractModel(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+
+        return super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
@@ -24,7 +31,7 @@ class Course(CourseAbstractModel):
 
     title_image = models.ImageField(upload_to='courses_titles', default='courses_titles/empty.png')
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    overview = RichTextField(blank=True, null=True)
+    overview = RichTextUploadingField(blank=True, null=True)
 
 
 
@@ -32,7 +39,7 @@ class Module(CourseAbstractModel):
 
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     description = RichTextField(blank=True, null=True)
-    content = RichTextField(blank=True, null=True)
+    content = RichTextUploadingField(blank=True, null=True)
 
 
 class ModuleTest(CourseAbstractModel):
