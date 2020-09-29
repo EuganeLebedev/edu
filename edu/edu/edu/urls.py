@@ -20,6 +20,7 @@ from django.urls import path, include
 from index import urls as index_urls
 from content_admin import urls as content_admin_urls
 from courses import urls as courses_urls
+from students import urls as students_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +28,7 @@ urlpatterns = [
     path('cadm/', include(content_admin_urls)),
     path('courses/', include(courses_urls)),
     path('ckeditor', include('ckeditor_uploader.urls')),
+    path('students/', include('students.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'content_admin.apps.ContentAdminConfig',
     'profiles.apps.ProfilesConfig',
+    'students.apps.StudentsConfig',
 
     'debug_toolbar',
     'ckeditor',
