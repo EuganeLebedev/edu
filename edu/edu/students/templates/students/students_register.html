@@ -1,87 +1,93 @@
 {% extends 'index/base.html' %}
+{% load static %}
 
 {% load crispy_forms_tags %}
 {% crispy form %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/users.css' %}">
+{% endblock %}
 
 {% block title %}
   Регистрация нового пользователя
 {% endblock %}
 
 {% block body %}
-<form class="form-horizontal" action='' method="POST">
-    {{ form.non_field_errors }}
-  <fieldset>
-    <div id="legend">
-      <legend class="">Регистрация</legend>
-    </div>
-    <div class="control-group">
-      <!-- Username -->
+<div class="box">
+    <form class="form-horizontal box-form" action='' method="POST">
+        {{ form.non_field_errors }}
+        <fieldset>
+            <div id="legend">
+                <legend class="">Регистрация</legend>
+            </div>
+            <div class="control-group">
+                <!-- Username -->
 
-      <label class="control-label"  for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
-      <div class="controls">
+                <label class="control-label"  for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                <div class="controls">
 
-        {{ form.username.errors }}
-        {{ form.username }}
-        <div class="valid-feedback">
-          Looks good!
-        </div>
-        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+                    {{ form.username.errors }}
+                    {{ form.username }}
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                    <p class="help-block">Username can contain any letters or numbers, without spaces</p>
 
 
-      </div>
-    </div>
+                </div>
+            </div>
 
-    <div class="control-group">
-      <!-- E-mail -->
-      <label class="control-label" for="{{ form.phone_number.id_for_label }}">{{ form.phone_number.label }}</label>
-      <div class="controls">
-        {{ form.phone_number.errors }}
-        {{ form.phone_number }}
-        <p class="help-block">Please provide your Phone number</p>
-      </div>
-    </div>
+            <div class="control-group">
+                <!-- E-mail -->
+                <label class="control-label" for="{{ form.phone_number.id_for_label }}">{{ form.phone_number.label }}</label>
+                <div class="controls">
+                    {{ form.phone_number.errors }}
+                    {{ form.phone_number }}
+                    <p class="help-block">Please provide your Phone number</p>
+                </div>
+            </div>
 
-    <div class="control-group">
-      <!-- Password-->
-      <label class="control-label" for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
-      <div class="controls">
-        {{ form.password1.errors }}
-        {{ form.password1 }}
-        <p class="help-block">Password should be at least 4 characters</p>
-      </div>
-    </div>
+            <div class="control-group">
+                <!-- Password-->
+                <label class="control-label" for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+                <div class="controls">
+                    {{ form.password1.errors }}
+                    {{ form.password1 }}
+                    <p class="help-block">Password should be at least 4 characters</p>
+                </div>
+            </div>
 
-    <div class="control-group">
-      <!-- Password -->
-      <label class="control-label"  for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
-      <div class="controls">
-        {{ form.password2.errors }}
-        {{ form.password2 }}
-        <p class="help-block">Please confirm password</p>
+            <div class="control-group">
+                <!-- Password -->
+                <label class="control-label"  for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+                <div class="controls">
+                    {{ form.password2.errors }}
+                    {{ form.password2 }}
+                    <p class="help-block">Please confirm password</p>
 
-      </div>
-    </div>
+                </div>
+            </div>
 
-<!--
-    <div class="col-md-4 mb-3">
-      <label for="validationServer01">First name</label>
-      <input type="text" class="form-control is-valid" id="validationServer01" placeholder="First name" value="Mark" required>
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-    </div>
-    -->
 
-    <div class="control-group">
-      <!-- Button -->
-      <div class="controls">
+            <div class="control-group">
+                <!-- Button -->
+                <div class="controls">
 
-        {% csrf_token %}
-        <button class="btn btn-success">Регистрация</button>
-      </div>
-    </div>
-  </fieldset>
-</form>
+                    {% csrf_token %}
+                    <button class="btn btn-success">Регистрация</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+
+
+{% endblock %}
+
+{% block scriptarea %}
+
+<script src="{% static 'js/register.js' %}"></script>
 
 
 {% endblock %}

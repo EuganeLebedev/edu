@@ -1,46 +1,55 @@
 {% extends 'index/base.html' %}
 
+{% load static %}
+
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/users.css' %}">
+{% endblock %}
 
 {% block title %}
   Вход
 {% endblock %}
 
 {% block body %}
-<form class="form-horizontal" action='' method="POST">
-  {{ form.non_field_errors }}
-  <fieldset>
-    <div id="legend">
-      <legend class="">Вход</legend>
-    </div>
-    {% for field in form %}
-    {{ field.errors }}
-    <div class="control-group">
-      <!-- Username -->
-        <label class="control-label" for="{{ field.auto_id }}">
-          {{ field.label}}
-        </label>
-      <!--
 
-      {{ field.label_tag }}
-      <label class="control-label"  for="{{ field.id_for_label }}">Username</label>
-      -->
-      <div class="controls">
-        {{ field }}
-        <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+<div class="box">
+  <form class="form-horizontal box-form" action='' method="POST">
+    {{ form.non_field_errors }}
+    <fieldset>
+      <div id="legend">
+        <legend class="">Вход</legend>
       </div>
-    </div>
-    {% endfor %}
+      {% for field in form %}
+      {{ field.errors }}
+      <div class="control-group">
+        <!-- Username -->
+          <label class="control-label" for="{{ field.auto_id }}">
+            {{ field.label}}
+          </label>
+        <!--
 
-    <div class="control-group">
-
-      {% csrf_token %}
-      <!-- Button -->
-      <div class="controls">
-        <button class="btn btn-success">Вход</button>
+        {{ field.label_tag }}
+        <label class="control-label"  for="{{ field.id_for_label }}">Username</label>
+        -->
+        <div class="controls">
+          {{ field }}
+          <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+        </div>
       </div>
-    </div>
-  </fieldset>
-</form>
+      {% endfor %}
+
+      <div class="control-group">
+
+        {% csrf_token %}
+        <!-- Button -->
+        <div class="controls">
+          <button class="btn btn-success">Вход</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>
 
 
 {% endblock %}

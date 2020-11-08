@@ -1,0 +1,33 @@
+body {
+    height: 100%
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    background: #F5F5F5;
+}
+
+.box {
+    width: 400px;
+    background: #F5F5F5;
+    padding: 30px;
+    margin: 0 auto;
+}
+
+.box-form {
+    display: flex;
+    flex-direction: column;
+}
+.box-form input {
+    margin-bottom: 15px;
+    border: 2px solid #B8F7FF;
+    padding: 15px;
+}
+
+.box-form button {
+    background: #B8F7FF;
+}
