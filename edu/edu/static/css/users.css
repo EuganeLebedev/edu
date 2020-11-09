@@ -1,4 +1,4 @@
-body {
+body, html {
     height: 100%
 }
 
@@ -8,26 +8,33 @@ body {
     align-items: center;
     flex-direction: column;
     text-align: center;
-    background: #F5F5F5;
+    background: #56baed;
 }
 
 .box {
-    width: 400px;
-    background: #F5F5F5;
+    width: 500px;
+    background: #F8F9FA;
     padding: 30px;
     margin: 0 auto;
+    vertical-align: middle;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
 }
 
 .box-form {
     display: flex;
     flex-direction: column;
+
 }
 .box-form input {
     margin-bottom: 15px;
-    border: 2px solid #B8F7FF;
+    border: 2px solid #56baed;
     padding: 15px;
 }
 
 .box-form button {
-    background: #B8F7FF;
+    background: #56baed;
+    border: 2px solid #56baed;
 }

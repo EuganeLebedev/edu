@@ -5,10 +5,10 @@ class StudentCreationForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'class': 'form-control is-valid'})
-        self.fields['phone_number'].widget.attrs.update({'class': 'form-control'})
-        self.fields['password1'].widget.attrs.update({'class': 'form-control'})
-        self.fields['password2'].widget.attrs.update({'class': 'form-control'})
+        self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Пользователь'})
+        self.fields['phone_number'].widget.attrs.update({'class': 'form-control',  'placeholder': 'Номер телефона'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control',  'placeholder': 'Пароль'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control',  'placeholder': 'Пароль повторно'})
 
 
     class Meta:
@@ -29,8 +29,8 @@ class StudentAuthenticationForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'class': 'form-control is-valid'})
-        self.fields['password'].widget.attrs.update({'class': 'form-control'})
+        self.fields['username'].widget.attrs.update({'class': 'form-control is-valid', 'placeholder': 'Пользователь'})
+        self.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Пароль'})
 
     class Meta:
         model = UserModel

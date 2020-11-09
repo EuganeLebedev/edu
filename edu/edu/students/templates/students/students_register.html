@@ -1,4 +1,4 @@
-{% extends 'index/base.html' %}
+{% extends 'students/base.html' %}
 {% load static %}
 
 {% load crispy_forms_tags %}
@@ -15,6 +15,11 @@
 {% block body %}
 <div class="box">
     <form class="form-horizontal box-form" action='' method="POST">
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+              {{ form.non_field_errors }}
+            </div>
+        {% endif %}
         {{ form.non_field_errors }}
         <fieldset>
             <div id="legend">
@@ -23,14 +28,17 @@
             <div class="control-group">
                 <!-- Username -->
 
-                <label class="control-label"  for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
                 <div class="controls">
 
-                    {{ form.username.errors }}
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors %}
+                        <div class="alert alert-danger" role="alert">
+                          {{ error }}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                     {{ form.username }}
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
+
                     <p class="help-block">Username can contain any letters or numbers, without spaces</p>
 
 
@@ -39,9 +47,14 @@
 
             <div class="control-group">
                 <!-- E-mail -->
-                <label class="control-label" for="{{ form.phone_number.id_for_label }}">{{ form.phone_number.label }}</label>
                 <div class="controls">
-                    {{ form.phone_number.errors }}
+                    {% if form.phone_number.errors %}
+                        {% for error in form.phone_number.errors %}
+                        <div class="alert alert-danger" role="alert">
+                          {{ error }}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                     {{ form.phone_number }}
                     <p class="help-block">Please provide your Phone number</p>
                 </div>
@@ -49,9 +62,14 @@
 
             <div class="control-group">
                 <!-- Password-->
-                <label class="control-label" for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
                 <div class="controls">
-                    {{ form.password1.errors }}
+                   {% if form.password1.errors %}
+                        {% for error in form.password1.errors %}
+                        <div class="alert alert-danger" role="alert">
+                          {{ error }}
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                     {{ form.password1 }}
                     <p class="help-block">Password should be at least 4 characters</p>
                 </div>
@@ -59,11 +77,16 @@
 
             <div class="control-group">
                 <!-- Password -->
-                <label class="control-label"  for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
                 <div class="controls">
-                    {{ form.password2.errors }}
+                    {% if form.password2.errors %}
+                    {% for error in form.password2.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
                     {{ form.password2 }}
-                    <p class="help-block">Please confirm password</p>
 
                 </div>
             </div>
