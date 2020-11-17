@@ -71,6 +71,9 @@ class Answer(models.Model):
 
 class StudentAnswer(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
-
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ["user", "question"]
 

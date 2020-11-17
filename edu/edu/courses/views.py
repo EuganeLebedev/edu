@@ -45,11 +45,22 @@ class ModuleTestDetailView(DetailView):
                 answer = json.loads(answer_list_deserialized)
                 print(f'{answer=}', type(answer))
                 answer_model = models.Answer.objects.get(id=answer.get('answer_id'))
+                question_model = models.Question.objects.get(id=answer.get('question_id'))
+
                 print(f'{answer_model.is_correct=}')
                 return_answers.update({'answer_id': answer_model.id, 'is_correct': answer_model.is_correct})
-                #if request.user.is_athenticated():
+                #TODO поправить связи. Ответ на вопрос должен быть уникальным
                 if request.user.is_authenticated:
-                    student_answer = models.StudentAnswer.objects.update_or_create(user=request.user ,answer=answer_model)
+
+                    try:
+                        obj = models.StudentAnswer.objects.get(user=request.user, question=question_model)
+                        print('EXIST')
+                        obj.answer=answer_model
+                        obj.save()
+                    except models.StudentAnswer.DoesNotExist:
+                        student_answer = models.StudentAnswer.objects.create(user=request.user,
+                                                                                   question=question_model,
+                                                                                   answer=answer_model)
 
             else:
                 print('wrong answer_list variable')
