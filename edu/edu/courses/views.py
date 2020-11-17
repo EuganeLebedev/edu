@@ -47,6 +47,9 @@ class ModuleTestDetailView(DetailView):
                 answer_model = models.Answer.objects.get(id=answer.get('answer_id'))
                 print(f'{answer_model.is_correct=}')
                 return_answers.update({'answer_id': answer_model.id, 'is_correct': answer_model.is_correct})
+                #if request.user.is_athenticated():
+                if request.user.is_authenticated:
+                    student_answer = models.StudentAnswer.objects.update_or_create(user=request.user ,answer=answer_model)
 
             else:
                 print('wrong answer_list variable')

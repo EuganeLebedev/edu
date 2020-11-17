@@ -36,3 +36,8 @@ class QuestionAdmin(admin.ModelAdmin):
 @admin.register(models.Answer)
 class AnsverAdmin(admin.ModelAdmin):
     list_display = ['id', 'question', 'answer']
+
+
+@admin.register(models.StudentAnswer)
+class StudentAnswerAdmin(admin.ModelAdmin):
+    list_display = ['user', 'answer']

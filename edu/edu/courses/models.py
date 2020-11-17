@@ -71,5 +71,6 @@ class Answer(models.Model):
 
 class StudentAnswer(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
 
