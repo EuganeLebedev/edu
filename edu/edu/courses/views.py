@@ -35,7 +35,6 @@ class ModuleTestDetailView(DetailView):
         # 2. Привязка к пользователю
         # 3. Проверить был ли уже ответ и вернуть предупреждение
         # 4. Сделать форму с ответом неактивной после отправки запроса
-        # 5.
 
         if request.is_ajax():
             print(request.GET.get('my_answer'))
