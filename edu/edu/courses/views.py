@@ -49,7 +49,6 @@ class ModuleTestDetailView(DetailView):
 
                 print(f'{answer_model.is_correct=}')
                 return_answers.update({'answer_id': answer_model.id, 'is_correct': answer_model.is_correct})
-                #TODO поправить связи. Ответ на вопрос должен быть уникальным
                 if request.user.is_authenticated:
 
                     try:
