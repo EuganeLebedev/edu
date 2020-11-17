@@ -5,6 +5,7 @@ from django.db import models
 from django.conf import settings
 from django.template.defaultfilters import slugify
 # Create your models here.
+from profiles.models import UserModel
 
 class CourseAbstractModel(models.Model):
     title = models.CharField(max_length=200, blank=False)
@@ -55,8 +56,20 @@ class Question(models.Model):
     module_test = models.ForeignKey(ModuleTest, on_delete=models.CASCADE)
     question = models.CharField(max_length=256, null=False, blank=False)
 
+    def __repr__(self):
+        return self.question
+
+    def __str__(self):
+        return self.question
+
 class Answer(models.Model):
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.CharField(max_length=256, blank=False, null=False)
     is_correct = models.BooleanField(default=False)
+
+
+class StudentAnswer(models.Model):
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+

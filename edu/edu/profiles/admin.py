@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from .models import UserModel
+from .models import UserModel, StudentsGroupModel
 
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
@@ -17,3 +17,7 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(UserModel, CustomUserAdmin)
+
+@admin.register(StudentsGroupModel)
+class StudentsGroupAdmin(admin.ModelAdmin):
+    list_display = ['group_code', 'start_date']

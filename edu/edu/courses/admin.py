@@ -35,4 +35,4 @@ class QuestionAdmin(admin.ModelAdmin):
 
 @admin.register(models.Answer)
 class AnsverAdmin(admin.ModelAdmin):
-    list_display = ['id', 'question']
+    list_display = ['id', 'question', 'answer']

@@ -28,8 +28,8 @@ $(document).ready(function(){
             },
             success: function(response) {
                 $(this).text(response.seconds)
-                $(".answer").toggleClass('btn-success')
-                $(".answer").toggleType('hidden')
+                //$(".answer").toggleClass('btn-success')
+                //$(".answer").toggleType('hidden')
                 clickedItem.parent().toggleClass('bg-warning')
                 //window.alert(clickedItem.parent().prop('nodeName'))
                 $('#seconds').append('<li>1' + JSON.stringify(response.checked_answer)  + '</li>')
