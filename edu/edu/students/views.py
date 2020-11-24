@@ -42,3 +42,4 @@ class GroupListView(ListView):
 
     model = StudentsGroupModel
     template_name = 'students/groups/groups_list.html'
+    paginate_by = 1
