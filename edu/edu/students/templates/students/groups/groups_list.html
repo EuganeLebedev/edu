@@ -2,60 +2,69 @@
 
 {% load crispy_forms_tags %}
 
-
 {% block title %}
-Главная страница
+Списко групп
 {% endblock %}
 
 {% block body %}
 
-    {% for group in object_list %}
 
-    <a class="text-dark" data-toggle="collapse" href="#collapse_{{ group.group_code }}" role="button" aria-expanded="false" aria-controls="collapseExample">
-        <h1>Группа: {{ group.group_code }}</h1>
-    </a>
-    <span class="badge badge-secondary">{{ group.start_date }}</span>
-    <span class="badge badge-secondary">{{ group.usermodel_set.count }}</span>
-    {% if group.is_finished %}
-        <span class="badge badge-success">Обучение закончено</span>
-    {% endif %}
+{% for group in object_list %}
+
+<a class="text-dark" data-toggle="collapse" href="#collapse_{{ group.group_code }}" role="button" aria-expanded="false"
+   aria-controls="collapseExample">
+    <h1><span class="fas fa-users"></span> {{ group.group_code }}</h1>
+
+</a>
+<span class="badge badge-secondary">{{ group.start_date }}</span>
+<span class="badge badge-secondary">{{ group.usermodel_set.count }}</span>
+{% if group.is_finished %}
+<span class="badge badge-success">Обучение закончено</span>
+{% endif %}
 
 <div class="collapse" id="collapse_{{ group.group_code }}">
     {% for user in group.usermodel_set.all %}
     <ul class="list-group">
-      <li class="list-group-item">
-          {% if user.username %}
-              Имя пользователя: {{ user.username }}
-          {% endif %}
-          {% if user.first_name %}
-              Имя: {{ user.first_name }}
-          {% endif %}
-          {%if user.last_name %}
-              Фамилия: {{ user.last_name }}
-          {% endif %}
+        <li class="list-group-item">
+            {% if user.username %}
+            <span class="fas fa-user-graduate"></span> : {{ user.username }}
+            {% endif %}
+            {% if user.first_name %}
+            Имя: {{ user.first_name }}
+            {% endif %}
+            {%if user.last_name %}
+            Фамилия: {{ user.last_name }}
+            {% endif %}
 
-          <a  data-toggle="collapse" href="#collapse_{{ user.username }}" role="button" aria-expanded="false" aria-controls="collapseExample">
-            Контакты
-          </a>
+            <a class="text-dark" data-toggle="collapse" href="#collapse_{{ user.username }}" role="button"
+               aria-expanded="false"
+               aria-controls="collapseExample">
+                <span class="fas fa-id-card"></span>
+            </a>
 
-        <div class="collapse" id="collapse_{{ user.username }}">
-          <div class="card card-body">
-              {% if user.email %}
-                  e-mail: {{ user.email }}
-              {% endif %}
-              {% if user.phone_number %}
-                  Телефонный номер: {{ user.phone_number }}
-              {% endif %}
-          </div>
-        </div>
+            <div class="collapse" id="collapse_{{ user.username }}">
+                <div class="card card-body">
+                    {% if user.email %}
+                    <div>
+                        <span class="far fa-envelope"></span> {{ user.email }}
+                    </div>
 
-      </li>
+                    {% endif %}
+                    {% if user.phone_number %}
+                    <div>
+                        <span class="fas fa-phone-alt"></span> {{ user.phone_number }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </li>
     </ul>
     {% endfor %}
 </div>
 
 
-    {% endfor %}
+{% endfor %}
 <hr>
 
 {% include "index/pagination.html" with url_name="students/groups" %}
