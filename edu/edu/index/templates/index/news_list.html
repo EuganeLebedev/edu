@@ -13,7 +13,9 @@
 {% if post.title_image %}
 <img src="{{ post.title_image.url }}" alt="imgage">
 {% endif %}
-{{ post.content|safe }}
+{% with post_content=post.content|safe %}
+    {{ post_content|slice:500 }}
+{% endwith %}
 {% endfor %}
 <hr>
 

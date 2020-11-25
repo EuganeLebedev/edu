@@ -2,11 +2,12 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.views import LogoutView, LoginView
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 from django.views.generic import TemplateView, RedirectView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, FormView
 from .forms import StudentCreationForm, StudentAuthenticationForm
-from profiles.models import StudentsGroupModel
+from profiles.models import StudentsGroupModel, UserModel
 
 
 # Create your views here.
@@ -24,6 +25,18 @@ class StudentCreationView(CreateView):
             if user.is_active():
                 login(self.request, user)
         return result
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            username = request.GET.get('username', None)
+            responce = {"is_taken": UserModel.objects.filter(username__iexact=username).exists()}
+            return JsonResponse(responce)
+
+        return super(StudentCreationView, self).get(request, *args, **kwargs)
+
+
+
+
 
 
 class StudentLoginView(LoginView):
