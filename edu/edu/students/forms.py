@@ -29,7 +29,7 @@ class StudentAuthenticationForm(AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'class': 'form-control is-valid', 'placeholder': 'Пользователь'})
+        self.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Пользователь'})
         self.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Пароль'})
 
     class Meta:

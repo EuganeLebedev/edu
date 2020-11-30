@@ -30,17 +30,25 @@ $(document).ready(function(){
                 $(this).text(response.seconds)
                 //$(".answer").toggleClass('btn-success')
                 //$(".answer").toggleType('hidden')
-                clickedItem.parent().toggleClass('bg-warning')
                 //window.alert(clickedItem.parent().prop('nodeName'))
-                $('#seconds').append('<li>1' + JSON.stringify(response.checked_answer)  + '</li>')
+
+                //$('#seconds').append('<li>1' + JSON.stringify(response.checked_answer)  + '</li>')
+
+                //clickedItem.parent().find("button.answer").remove()
                 if (response.checked_answer.is_correct) {
                     console.log('+')
-                    clickedItem.parent().append('<h1><div class="alert alert-success" role="alert">Правильный ответ</div></h1>')
+                    //clickedItem.parent().children(".alert").remove()
+                    clickedItem.parent().find("div.alert").remove()
+                    clickedItem.parent().append('<div class="alert alert-success" role="alert">Правильный ответ</div>')
+
                 }
                 else {
                     console.log('-')
-                    clickedItem.parent().append('<h1><div class="alert alert-warning" role="alert">Ошибка</div></h1>')
+                    clickedItem.parent().find("div.alert").remove()
+                    clickedItem.parent().append('<div class="alert alert-warning" role="alert">Ошибка</div>')
                 }
+
+                clickedItem.parent().find("button.answer").remove()
 
                 answer_list = []
                 my_answer = {}
