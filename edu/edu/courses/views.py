@@ -29,12 +29,19 @@ class ModuleTestDetailView(DetailView):
     template_name = 'courses/module/module_test_detail.html'
     context_object_name = 'test'
 
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ModuleTestDetailView, self).get_context_data(*args, **kwargs)
+        question_set = context[self.context_object_name].question_set.all()
+        answer_count = models.StudentAnswer.objects.filter(user=self.request.user, question__in=question_set).count()
+        context["answers_count"] = answer_count
+        context["questions_count"] = question_set.count()
+        context["progress"] = int((answer_count/question_set.count())*100)
+        return context
+
     def get(self, request, *args, **kwargs):
         #TODO
         # 1. Работа с несколькими правильными ответами
-        # 2. Привязка к пользователю
-        # 3. Проверить был ли уже ответ и вернуть предупреждение
-        # 4. Сделать форму с ответом неактивной после отправки запроса
 
         if request.is_ajax():
             print(request.GET.get('my_answer'))
