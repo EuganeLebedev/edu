@@ -3,6 +3,18 @@
 {% load static %}
 {% load user_filter %}
 
+    {% block style %}
+<style>
+    .line {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    margin: auto;
+    }
+</style>
+    {% endblock %}
+
+
 {% block title %}
 {{ test.module.course.title }}
 
@@ -38,9 +50,14 @@
             COUNT {{ answers_count }} {{ test.question_set.count }} || {{ progress }}
             {% endcomment %}
 
+
             <div class="progress">
                 <div class="progress-bar" role="progressbar" style="width: {{ progress }}%" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">
-                    {{ answers_count }}/{{ questions_count }}
+                    <div class="line">
+                        <div id="answers_count">{{ answers_count }}</div>&nbsp;/&nbsp;
+                        <div id="questions_count">{{ questions_count }}</div>
+                    </div>
+
                 </div>
             </div>
 

@@ -46,6 +46,7 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
         except models.StudentModuleTestStatus.DoesNotExist:
             module_status = models.StudentModuleTestStatus.objects.create(user=self.request.user,
                                                                    module_test=self.get_object())
+        context["module_test_status"] = module_status
         return context
 
     def get(self, request, *args, **kwargs):
