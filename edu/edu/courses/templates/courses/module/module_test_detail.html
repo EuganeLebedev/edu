@@ -49,7 +49,7 @@
 
 
             {% with student_answer_set=question.studentanswer_set.all|filter_for_user:user %}
-            {% with student_answer=student_answer_set.first %}
+            {% with student_answer=student_answer_set.get %}
 
             {{ question.question }}
             <form action="" method="post">

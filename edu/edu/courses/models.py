@@ -77,3 +77,8 @@ class StudentAnswer(models.Model):
     class Meta:
         unique_together = ["user", "question"]
 
+class StudentModuleTestStatus(models.Model):
+    user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
+    module_test = models.ForeignKey(ModuleTest, on_delete=models.CASCADE)
+    passed = models.BooleanField(default=False)
+
