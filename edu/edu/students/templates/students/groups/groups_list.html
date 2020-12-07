@@ -13,11 +13,11 @@
 
 <a class="text-dark" data-toggle="collapse" href="#collapse_{{ group.group_code }}" role="button" aria-expanded="false"
    aria-controls="collapseExample">
-    <h1><span class="fas fa-users"></span> {{ group.group_code }}</h1>
+    <h1> {{ group.group_code }}</h1>
 
 </a>
 <span class="badge badge-secondary">{{ group.start_date }}</span>
-<span class="badge badge-secondary">{{ group.usermodel_set.count }}</span>
+<span class="badge badge-secondary"> <span class="fas fa-users"></span> {{ group.usermodel_set.count }}</span>
 {% if group.is_finished %}
 <span class="badge badge-success">Обучение закончено</span>
 {% endif %}
@@ -26,23 +26,21 @@
     {% for user in group.usermodel_set.all %}
     <ul class="list-group">
         <li class="list-group-item">
-            {% if user.username %}
-            <span class="fas fa-user-graduate"></span> : {{ user.username }}
-            {% endif %}
+            <span class="fas fa-user-graduate"></span>:
             {% if user.first_name %}
-            Имя: {{ user.first_name }}
+                {{ user.first_name }}
             {% endif %}
             {%if user.last_name %}
-            Фамилия: {{ user.last_name }}
+                {{ user.last_name }}
             {% endif %}
 
-            <a class="text-dark" data-toggle="collapse" href="#collapse_{{ user.username }}" role="button"
+            <a class="text-dark" data-toggle="collapse" href="#collapse_{{ group.group_code }}_{{ user.username }}" role="button"
                aria-expanded="false"
                aria-controls="collapseExample">
                 <span class="fas fa-id-card"></span>
             </a>
 
-            <div class="collapse" id="collapse_{{ user.username }}">
+            <div class="collapse" id="collapse_{{ group.group_code }}_{{ user.username }}">
                 <div class="card card-body">
                     {% if user.email %}
                     <div>

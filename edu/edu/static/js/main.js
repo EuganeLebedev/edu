@@ -47,6 +47,10 @@ $(document).ready(function(){
                     clickedItem.parent().find("div.alert").remove()
                     clickedItem.parent().append('<div class="alert alert-warning" role="alert">Ошибка</div>')
                 }
+                $('#progress-bar').css({ 'width': JSON.stringify(response.progress) + '%' })
+                $('#progress-bar').attr({ 'aria-valuenow': JSON.stringify(response.progress) })
+
+                $('#answers_count').text(JSON.stringify(response.answer_count))
 
                 clickedItem.parent().find("button.answer").remove()
 

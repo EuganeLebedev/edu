@@ -1,5 +1,6 @@
 
 
+{% load user_filter %}
     <!-- Sidebar -->
 
     {% if course.module_set %}
@@ -13,7 +14,15 @@
                   </a>
               {% if class_module.moduletest %}
                   <a href="{% url 'courses:module_test' class_module.moduletest.id %}" class="list-group-item list-group-item-action bg-light">{{ class_module.moduletest.title }}
-                  <span class="badge badge-primary badge-pill">not passed</span>
+                      {% with test_status=class_module.moduletest.studentmoduleteststatus_set.all|filter_for_user:user %}
+                      {% if test_status.get.passed %}
+
+                      <span class="badge badge-success badge-pill">пройден</span>
+                      {% else %}
+
+                      <span class="badge badge-primary badge-pill">не пройден</span>
+                      {% endif %}
+                      {% endwith %}
                   </a>
               {% endif %}
               {% endfor %}

@@ -8,6 +8,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, FormView
 from .forms import StudentCreationForm, StudentAuthenticationForm
 from profiles.models import StudentsGroupModel, UserModel
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 # Create your views here.
@@ -51,8 +52,10 @@ class StudentLogoutView(LogoutView):
     next_page = 'students:login_student'
 
 
-class GroupListView(ListView):
+class GroupListView(PermissionRequiredMixin, ListView):
 
     model = StudentsGroupModel
     template_name = 'students/groups/groups_list.html'
-    paginate_by = 1
+    paginate_by = 10
+
+    permission_required = 'is_staff'

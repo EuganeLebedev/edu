@@ -56,6 +56,10 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
 
         if request.is_ajax():
             print(request.GET.get('my_answer'))
+
+
+
+
             answer_list_deserialized = request.GET.get('my_answer')
             return_answers = {}
             if answer_list_deserialized:
@@ -63,6 +67,8 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
                 print(f'{answer=}', type(answer))
                 answer_model = models.Answer.objects.get(id=answer.get('answer_id'))
                 question_model = models.Question.objects.get(id=answer.get('question_id'))
+
+
 
                 print(f'{answer_model.is_correct=}')
                 return_answers.update({'answer_id': answer_model.id, 'is_correct': answer_model.is_correct})
@@ -77,12 +83,29 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
                         student_answer = models.StudentAnswer.objects.create(user=request.user,
                                                                              question=question_model,
                                                                              answer=answer_model)
+                    questions_set = question_model.module_test.question_set
+                    questions_set_count = questions_set.count()
+
+                    answer_count = models.StudentAnswer.objects.filter(user=self.request.user,
+                                                                       question__in=questions_set.all()).count()
+
+                    print(F"COUNT {questions_set_count} / {answer_count}")
+                    progress = int(int(answer_count) / int(questions_set_count) * 100)
+                    print(f"PROGRESS {progress}")
+                    if answer_count == questions_set_count:
+                        module_status = models.StudentModuleTestStatus.objects.get(user=self.request.user,
+                                                                                       module_test=question_model.module_test)
+                        module_status.passed = True
+                        module_status.save()
+
 
             else:
+                #TODO
+                # return message
                 print('wrong answer_list variable')
             # context = self.get_context_data(*args, **kwargs)
             # print(f'COUNTS {context.get("questions_count")} {context.get("answers_count")}')
-            return JsonResponse({'seconds': 1, 'checked_answer': return_answers}, status=200)
+            return JsonResponse({'seconds': 1, 'checked_answer': return_answers, 'progress': progress, 'answer_count': answer_count }, status=200)
 
         return super().get(request, *args, **kwargs)
 
