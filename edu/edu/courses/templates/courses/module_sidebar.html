@@ -29,7 +29,7 @@
               {% endfor %}
 
           {% if user.is_staff %}
-          <a href="#" class="list-group-item list-group-item-action bg-light">
+          <a href="{% url 'content_admin:module_create' course_pk=course.pk %}" class="list-group-item list-group-item-action bg-light">
 
               Добавить модуль
           </a>

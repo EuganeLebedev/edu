@@ -46,6 +46,9 @@ class Module(CourseAbstractModel):
     description = RichTextField(blank=True, null=True)
     content = RichTextUploadingField(blank=True, null=True)
 
+    def get_absolute_url(self):
+        return reverse('courses:module_detail', kwargs={'pk': self.pk})
+
 
 class ModuleTest(CourseAbstractModel):
 
