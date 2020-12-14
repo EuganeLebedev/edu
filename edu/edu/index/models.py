@@ -20,7 +20,7 @@ class NewsModel(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('NewsListView')
+        return reverse('index:news_list')
 
     class Meta():
         verbose_name = 'news'

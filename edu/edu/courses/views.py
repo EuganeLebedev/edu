@@ -52,14 +52,9 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
     def get(self, request, *args, **kwargs):
         # TODO
         # 1. Работа с несколькими правильными ответами
-        # 2.
 
         if request.is_ajax():
             print(request.GET.get('my_answer'))
-
-
-
-
             answer_list_deserialized = request.GET.get('my_answer')
             return_answers = {}
             if answer_list_deserialized:
@@ -92,9 +87,9 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
                     print(F"COUNT {questions_set_count} / {answer_count}")
                     progress = int(int(answer_count) / int(questions_set_count) * 100)
                     print(f"PROGRESS {progress}")
+                    module_status = models.StudentModuleTestStatus.objects.get(user=self.request.user,
+                                                                               module_test=question_model.module_test)
                     if answer_count == questions_set_count:
-                        module_status = models.StudentModuleTestStatus.objects.get(user=self.request.user,
-                                                                                       module_test=question_model.module_test)
                         module_status.passed = True
                         module_status.save()
 

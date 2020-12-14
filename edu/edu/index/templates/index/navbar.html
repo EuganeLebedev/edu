@@ -27,6 +27,10 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{% url 'courses:courses_list' %}">Курсы</a>
+
+          {% if user.is_staff %}
+          <a class="dropdown-item" href="{% url 'content_admin:course_create' %}">Создать курс</a>
+          {% endif%}
           <a class="dropdown-item" href="#">Another action</a>
         </div>
 

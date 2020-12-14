@@ -7,7 +7,10 @@ class CourseCreateForm(forms.ModelForm):
         model = Course
         fields = ['title', 'title_image', 'subject', 'overview']
         labels = {
-            'title': 'Zagolovok'
+            'title': 'Заголовок',
+            'title_image': 'Изображение',
+            'subject': 'Предмет',
+            'overview': 'Описание',
         }
 
 

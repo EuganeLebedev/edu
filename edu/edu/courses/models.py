@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.conf import settings
 from django.template.defaultfilters import slugify
+from django.urls import reverse
 # Create your models here.
 from profiles.models import UserModel
 
@@ -33,6 +34,9 @@ class Course(CourseAbstractModel):
     title_image = models.ImageField(upload_to='courses_titles', default='courses_titles/empty.png')
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     overview = RichTextUploadingField(blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse('courses:course_detail', kwargs={'pk': self.pk})
 
 
 
