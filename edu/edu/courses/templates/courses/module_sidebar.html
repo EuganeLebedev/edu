@@ -1,47 +1,56 @@
-
-
 {% load user_filter %}
-    <!-- Sidebar -->
+<!-- Sidebar -->
 
-    {% if course.module_set %}
-    <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">Модули курса </div>
-      <div class="list-group list-group-flush">
-              {% for class_module in course.module_set.all %}
-                  <a href="{% url 'courses:module_detail' class_module.id %}" class="list-group-item list-group-item-action bg-light
+{% if course.module_set %}
+<div class="bg-light border-right" id="sidebar-wrapper">
+    <div class="sidebar-heading">Модули курса</div>
+    <div class="list-group list-group-flush">
+        {% for class_module in course.module_set.all %}
+        <a href="{% url 'courses:module_detail' class_module.id %}" class="list-group-item list-group-item-action bg-light
                       {% if class_module == module %}disabled{% endif %}">
-                      {{ class_module }}
-                  </a>
-              {% if class_module.moduletest %}
-                  <a href="{% url 'courses:module_test' class_module.moduletest.id %}" class="list-group-item list-group-item-action bg-light">{{ class_module.moduletest.title }}
-                      {% with test_status=class_module.moduletest.studentmoduleteststatus_set.all|filter_for_user:user %}
-                      {% if test_status.get.passed %}
+            {{ class_module }}
+        </a>
+        {% if class_module.moduletest %}
+        <a href="{% url 'courses:module_test' class_module.moduletest.id %}"
+           class="list-group-item list-group-item-action bg-light">{{ class_module.moduletest.title }}
+            {% with test_status=class_module.moduletest.studentmoduleteststatus_set.all|filter_for_user:user %}
+            {% if test_status.get.passed %}
 
-                      <span class="badge badge-success badge-pill">пройден</span>
-                      {% else %}
+            <span class="badge badge-success badge-pill">пройден</span>
+            {% else %}
 
-                      <span class="badge badge-primary badge-pill">не пройден</span>
-                      {% endif %}
-                      {% endwith %}
-                  </a>
-              {% endif %}
+            <span class="badge badge-primary badge-pill">не пройден</span>
+            {% endif %}
+            {% endwith %}
+        </a>
+        {% else %}
 
-              {% endfor %}
+            {% if user.is_staff %}
 
-          {% if user.is_staff %}
-          <a href="{% url 'content_admin:module_create' course_pk=course.pk %}" class="list-group-item list-group-item-action bg-light">
+            <a href="{% url 'content_admin:module_create' course_pk=course.pk %}"
+               class="list-group-item list-group-item-action bg-light">
+                Добавить тест к модулю
+            </a>
+            {% endif %}
+        {% endif %}
 
-              Добавить модуль
-          </a>
-          {% endif%}
-      </div>
+        {% endfor %}
+
+        {% if user.is_staff %}
+        <a href="{% url 'content_admin:module_create' course_pk=course.pk %}"
+           class="list-group-item list-group-item-action bg-light">
+
+            Добавить модуль
+        </a>
+        {% endif%}
     </div>
-    {% endif %}
-    <!-- /#sidebar-wrapper -->
+</div>
+{% endif %}
+<!-- /#sidebar-wrapper -->
 
-    <!-- Page Content -->
+<!-- Page Content -->
 
-    <!-- /#page-content-wrapper -->
+<!-- /#page-content-wrapper -->
 
 
 
