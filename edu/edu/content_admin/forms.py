@@ -1,5 +1,5 @@
 from django import forms
-from courses.models import Course
+from courses.models import Course, ModuleTest
 
 class CourseCreateForm(forms.ModelForm):
 
@@ -13,4 +13,12 @@ class CourseCreateForm(forms.ModelForm):
             'overview': 'Описание',
         }
 
+class ModuleTestCreateForm(forms.ModelForm):
+
+    class Meta:
+        model = ModuleTest
+        fields = ['title']
+        labels = {
+            'title': 'Заголовок',
+        }
 

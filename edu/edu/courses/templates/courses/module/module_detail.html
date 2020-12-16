@@ -29,6 +29,11 @@
             {{ module.title }}</h1>
           {{ module.content|safe }}
 
+                      <hr>
+            {% if user.is_staff %}
+
+            <a href="{% url 'content_admin:module_update' pk=module.pk course_pk=course.pk %}" class="btn btn-primary">Редактировать</a>
+            {% endif%}
       </div>
     </div>
 {% endwith %}

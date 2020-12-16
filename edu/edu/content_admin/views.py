@@ -1,6 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from .forms import CourseCreateForm
+from django.urls import reverse_lazy
+
+from .forms import CourseCreateForm, ModuleTestCreateForm
 
 # Create your views here.
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
@@ -46,12 +48,29 @@ class ModuleCreateView(CreateView):
     fields = ["title", "content", "description"]
     template_name = "content_admin/module_create.html"
 
-
-
-
     def form_valid(self, form):
 
         course = get_object_or_404(Course, pk=self.kwargs.get("course_pk"))
         form.instance.owner = self.request.user
         form.instance.course = course
         return super(ModuleCreateView, self).form_valid(form)
+
+
+class ModuleUpdateView(UpdateView):
+    model = Module
+    fields = ["title", "content", "description"]
+    template_name = "content_admin/module_create.html"
+
+
+class ModuleTestCreateView(CreateView):
+    form_class = ModuleTestCreateForm
+    template_name = "content_admin/module_test_create.html"
+
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        module = get_object_or_404(Module, pk = self.kwargs.get("module_pk"))
+        form.instance.module = module
+        return super(ModuleTestCreateView, self).form_valid(form)
+
+

@@ -38,7 +38,7 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
         answer_count = models.StudentAnswer.objects.filter(user=self.request.user, question__in=question_set).count()
         context["answers_count"] = answer_count
         context["questions_count"] = question_set.count()
-        context["progress"] = int((answer_count / question_set.count()) * 100)
+        context["progress"] = int((answer_count / question_set.count()) * 100) if question_set.count() > 0 else 0
 
         try:
             module_status = models.StudentModuleTestStatus.objects.get(user=self.request.user,

@@ -27,7 +27,7 @@
 
             {% if user.is_staff %}
 
-            <a href="{% url 'content_admin:module_create' course_pk=course.pk %}"
+            <a href="{% url 'content_admin:module_test_create' course_pk=course.pk module_pk=class_module.pk %}"
                class="list-group-item list-group-item-action bg-light">
                 Добавить тест к модулю
             </a>
