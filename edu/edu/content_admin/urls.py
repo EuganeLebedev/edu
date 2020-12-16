@@ -13,5 +13,10 @@ urlpatterns = [
     path('courses/<int:course_pk>/module/<int:pk>/update', views.ModuleUpdateView.as_view(), name='module_update'),
     path('courses/<int:course_pk>/module/<int:module_pk>/test_creation', views.ModuleTestCreateView.as_view(),
          name='module_test_create'),
+    path('courses/<int:course_pk>/module/<int:module_pk>/test/<int:test_pk>/create',
+         views.ModuleTestQuestionCreateView.as_view(),
+         name='module_test_question_create'),
+    path('question/<int:pk>/create',
+         views.ModuleTestQuestionAnswerCreateView.as_view(), name="answers_create"),
 
 ]

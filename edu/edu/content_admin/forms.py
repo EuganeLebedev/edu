@@ -1,5 +1,7 @@
 from django import forms
-from courses.models import Course, ModuleTest
+from courses.models import Course, ModuleTest, Answer, Question
+from django.forms import inlineformset_factory
+
 
 class CourseCreateForm(forms.ModelForm):
 
@@ -22,3 +24,11 @@ class ModuleTestCreateForm(forms.ModelForm):
             'title': 'Заголовок',
         }
 
+class AnswerForm(forms.ModelForm):
+
+    class Meta:
+        model = Answer
+        fields = ["answer", "is_correct", ]
+
+
+AnswerFormset = inlineformset_factory(Question, Answer, form=AnswerForm, extra=5)
