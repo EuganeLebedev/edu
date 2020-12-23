@@ -11,7 +11,7 @@
         {{ form.media }}
         {{ form.as_p }}
 
-         {{ answers.management_form }}
+         {{ answers.management_form | safe }}
         <hr>
 
         {% for answer_form in answers.forms %}

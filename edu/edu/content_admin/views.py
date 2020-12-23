@@ -1,7 +1,7 @@
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 from .forms import CourseCreateForm, ModuleTestCreateForm, AnswerFormset, QuestionForm
 
@@ -79,8 +79,12 @@ class ModuleTestCreateView(CreateView):
 class ModuleTestQuestionAnswerCreateView(CreateView):
     model = Question
     form_class = QuestionForm
-    success_url = reverse_lazy('index:index')
+    success_url = None
     template_name = "content_admin/answers_create.html"
+
+    def get_success_url(self):
+        success_url = reverse("courses:module_test", kwargs={"pk": self.object.module_test.id})
+        return success_url
 
     def get_context_data(self, **kwargs):
         data = super(ModuleTestQuestionAnswerCreateView, self).get_context_data(**kwargs)
@@ -106,8 +110,12 @@ class ModuleTestQuestionAnswerCreateView(CreateView):
 class ModuleTestQuestionAnswerUpdateView(UpdateView):
     model = Question
     form_class = QuestionForm
-    success_url = reverse_lazy("index:index")
     template_name = "content_admin/answers_create.html"
+    success_url = None
+
+    def get_success_url(self):
+        success_url = reverse("courses:module_test", kwargs={"pk": self.object.module_test.id})
+        return success_url
 
     def get_context_data(self, **kwargs):
         data = super(ModuleTestQuestionAnswerUpdateView, self).get_context_data(**kwargs)

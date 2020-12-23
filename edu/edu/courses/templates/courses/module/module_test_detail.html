@@ -67,8 +67,16 @@
 
             {% with student_answer_set=question.studentanswer_set.all|filter_for_user:user %}
             {% with student_answer=student_answer_set.get %}
+<hr>
+            <div class="row">
 
-            {{ question.question }}
+                {{ question.question | safe }}
+                {% if user.is_staff %}
+                &nbsp;
+                <a href="{% url 'content_admin:answers_update' test_pk=test.pk pk=question.pk %}" class="text">[ Редактировать ]</a>
+                {% endif%}
+            </div>
+
             <form action="" method="post">
                 <div class="container">
                     <ul id="test-id">
@@ -85,16 +93,12 @@
                         </li>
                         {% endfor %}
 
-                                                <hr>
-            {% if user.is_staff %}
 
-                <a href="{% url 'content_admin:answers_update' test_pk=test.pk pk=question.pk %}" class="btn btn-sm btn-primary"> Редактировать</a>
-            {% endif%}
 
                     </ul>
 
                     {% if not student_answer %}
-                    <button type="button" class="btn btn-success btn-lg answer">GET</button>
+                    <button type="button" class="btn btn-sm btn-success btn-lg answer">Ответить</button>
                     {% endif %}
                     {% if student_answer %}
                     {% if student_answer.answer.is_correct %}
@@ -107,7 +111,6 @@
 
                 </div>
             </form>
-            <br>
 
             {% endwith %}
             {% endwith %}
