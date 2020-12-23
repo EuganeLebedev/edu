@@ -11,6 +11,10 @@
     text-align: center;
     margin: auto;
     }
+
+    ul {
+    list-style-type: none;
+    }
 </style>
     {% endblock %}
 
@@ -69,15 +73,20 @@
             {% with student_answer=student_answer_set.get %}
 <hr>
             <div class="row">
+                <div class="col">
+                    {{ question.question | safe }}
+                </div>
+                <div class="col align-left">
+                     {% if user.is_staff %}
+                        <a href="{% url 'content_admin:answers_update' test_pk=test.pk pk=question.pk %}" class="text">[ Редактировать ]</a>
+                    {% endif%}
+                </div>
 
-                {{ question.question | safe }}
-                {% if user.is_staff %}
-                &nbsp;
-                <a href="{% url 'content_admin:answers_update' test_pk=test.pk pk=question.pk %}" class="text">[ Редактировать ]</a>
-                {% endif%}
+
             </div>
 
             <form action="" method="post">
+
                 <div class="container">
                     <ul id="test-id">
                         {% for answer in question.answer_set.all %}

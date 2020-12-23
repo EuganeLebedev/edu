@@ -3,7 +3,8 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.db import models
 from django.conf import settings
-from django.template.defaultfilters import slugify
+# from django.template.defaultfilters import slugify
+from slugify import slugify
 from django.urls import reverse
 # Create your models here.
 from profiles.models import UserModel
