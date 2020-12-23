@@ -116,7 +116,6 @@
                         <hr>
             {% if user.is_staff %}
 
-            <a href="{% url 'content_admin:module_test_question_create' course_pk=course.pk module_pk=test.module.pk test_pk=test.pk %}" class="btn btn-primary">Добавить вопрос</a>
 
             <a href="{% url 'content_admin:answers_create' test_pk=test.pk %}" class="btn btn-sm btn-primary">Добавить вопрос</a>
             {% endif%}

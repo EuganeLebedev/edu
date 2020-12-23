@@ -74,18 +74,6 @@ class ModuleTestCreateView(CreateView):
         return super(ModuleTestCreateView, self).form_valid(form)
 
 
-class ModuleTestQuestionCreateView(CreateView):
-    model = Question
-    fields = ["question", ]
-    template_name = "content_admin/module_test_question_create.html"
-    # TODO
-    # Перенаправить на окно создания ответов к этому вопросу
-    success_url = reverse_lazy("index:index")
-
-    def form_valid(self, form):
-        module_test = get_object_or_404(ModuleTest, pk=self.kwargs.get("test_pk"))
-        form.instance.module_test = module_test
-        return super(ModuleTestQuestioncreateView, self).form_valid(form)
 
 
 class ModuleTestQuestionAnswerCreateView(CreateView):

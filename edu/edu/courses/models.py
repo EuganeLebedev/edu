@@ -65,7 +65,7 @@ class ModuleTest(CourseAbstractModel):
 class Question(models.Model):
 
     module_test = models.ForeignKey(ModuleTest, on_delete=models.CASCADE)
-    question = models.CharField(max_length=256, null=False, blank=False)
+    question = RichTextUploadingField(max_length=256, null=False, blank=False)
 
     def __repr__(self):
         return self.question
