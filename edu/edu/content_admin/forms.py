@@ -24,6 +24,11 @@ class ModuleTestCreateForm(forms.ModelForm):
             'title': 'Заголовок',
         }
 
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ["question"]
+
 class AnswerForm(forms.ModelForm):
 
     class Meta:
@@ -31,4 +36,4 @@ class AnswerForm(forms.ModelForm):
         fields = ["answer", "is_correct", ]
 
 
-AnswerFormset = inlineformset_factory(Question, Answer, form=AnswerForm, extra=5)
+AnswerFormset = inlineformset_factory(Question, Answer, form=AnswerForm, extra=2)

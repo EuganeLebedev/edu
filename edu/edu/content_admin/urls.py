@@ -16,7 +16,8 @@ urlpatterns = [
     path('courses/<int:course_pk>/module/<int:module_pk>/test/<int:test_pk>/create',
          views.ModuleTestQuestionCreateView.as_view(),
          name='module_test_question_create'),
-    path('question/<int:pk>/create',
+    path('test/<int:test_pk>/question_create',
          views.ModuleTestQuestionAnswerCreateView.as_view(), name="answers_create"),
+    path('test/<int:test_pk>/question/<int:pk>/question_update', views.ModuleTestQuestionAnswerUpdateView.as_view(), name="answers_update"),
 
 ]

@@ -32,10 +32,16 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
     template_name = 'courses/module/module_test_detail.html'
     context_object_name = 'test'
 
+    def get_queryset(self):
+        qs = super(ModuleTestDetailView, self).get_queryset()
+        qs = qs.select_related()
+        return qs
+
     def get_context_data(self, *args, **kwargs):
         context = super(ModuleTestDetailView, self).get_context_data(*args, **kwargs)
-        question_set = context[self.context_object_name].question_set.all()
-        answer_count = models.StudentAnswer.objects.filter(user=self.request.user, question__in=question_set).count()
+        question_set = context[self.context_object_name].question_set.all().select_related()
+        answer_count = models.StudentAnswer.objects.filter(user=self.request.user,
+                                                           question__in=question_set).count()
         context["answers_count"] = answer_count
         context["questions_count"] = question_set.count()
         context["progress"] = int((answer_count / question_set.count()) * 100) if question_set.count() > 0 else 0
@@ -45,7 +51,7 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
                                                                        module_test=self.get_object())
         except models.StudentModuleTestStatus.DoesNotExist:
             module_status = models.StudentModuleTestStatus.objects.create(user=self.request.user,
-                                                                   module_test=self.get_object())
+                                                                          module_test=self.get_object())
         context["module_test_status"] = module_status
         return context
 
@@ -62,8 +68,6 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
                 print(f'{answer=}', type(answer))
                 answer_model = models.Answer.objects.get(id=answer.get('answer_id'))
                 question_model = models.Question.objects.get(id=answer.get('question_id'))
-
-
 
                 print(f'{answer_model.is_correct=}')
                 return_answers.update({'answer_id': answer_model.id, 'is_correct': answer_model.is_correct})
@@ -95,12 +99,14 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
 
 
             else:
-                #TODO
+                # TODO
                 # return message
                 print('wrong answer_list variable')
             # context = self.get_context_data(*args, **kwargs)
             # print(f'COUNTS {context.get("questions_count")} {context.get("answers_count")}')
-            return JsonResponse({'seconds': 1, 'checked_answer': return_answers, 'progress': progress, 'answer_count': answer_count }, status=200)
+            return JsonResponse(
+                {'seconds': 1, 'checked_answer': return_answers, 'progress': progress, 'answer_count': answer_count},
+                status=200)
 
         return super().get(request, *args, **kwargs)
 
