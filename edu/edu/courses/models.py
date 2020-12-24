@@ -62,6 +62,9 @@ class ModuleTest(CourseAbstractModel):
 
         return reverse('courses:module_test', kwargs={'pk': self.pk})
 
+    def get_questions(self):
+        return self.question_set.all().select_related()
+
 
 class Question(models.Model):
 

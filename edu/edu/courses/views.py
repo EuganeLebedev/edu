@@ -43,8 +43,9 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
         answer_count = models.StudentAnswer.objects.filter(user=self.request.user,
                                                            question__in=question_set).count()
         context["answers_count"] = answer_count
-        context["questions_count"] = question_set.count()
-        context["progress"] = int((answer_count / question_set.count()) * 100) if question_set.count() > 0 else 0
+        questions_count = question_set.count()
+        context["questions_count"] = questions_count
+        context["progress"] = int((answer_count / questions_count) * 100) if questions_count > 0 else 0
 
         try:
             module_status = models.StudentModuleTestStatus.objects.get(user=self.request.user,
@@ -65,11 +66,11 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
             return_answers = {}
             if answer_list_deserialized:
                 answer = json.loads(answer_list_deserialized)
-                print(f'{answer=}', type(answer))
+                print(f'{answer}', type(answer))
                 answer_model = models.Answer.objects.get(id=answer.get('answer_id'))
                 question_model = models.Question.objects.get(id=answer.get('question_id'))
 
-                print(f'{answer_model.is_correct=}')
+                print(f'{answer_model.is_correct}')
                 return_answers.update({'answer_id': answer_model.id, 'is_correct': answer_model.is_correct})
                 if request.user.is_authenticated:
 
@@ -110,9 +111,4 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
 
         return super().get(request, *args, **kwargs)
 
-    def post(self, *args, **kwargs):
-        print(dict(self.request.POST))
-        print(f'args {args}')
-        return HttpResponse(f"<h1>OK</h1>"
-                            f"kwargs: {kwargs}"
-                            f"<hr>request data: {dict(self.request.POST)}")
+
