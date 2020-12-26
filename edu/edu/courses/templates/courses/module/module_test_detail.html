@@ -28,6 +28,8 @@
 
 {% block body %}
 {% with course=test.module.course %}
+
+
 <div class="d-flex" id="wrapper">
     {% include 'courses/module_sidebar.html' %}
     <div id="page-content-wrapper">
@@ -70,8 +72,9 @@
             {% for question in test.get_questions %}
 
 
-            {% with student_answer_set=question.studentanswer_set.all|filter_for_user:user %}
-            {% with student_answer=student_answer_set.get %}
+
+            {% with student_answer=question|get_student_answer_for_user:user %}
+
 <hr>
             <div class="row">
                 <div class="col">
@@ -94,13 +97,15 @@
                         <li class="t1">
                             <div class="form-check">
                                 <input type="hidden" name="question_id" value="{{ question.id }}">
-                                <input class="form-check-input" type="radio" name="answer_radio" id="answer_radio"
+                                <input class="form-check-input" type="radio" name="answer_radio" id="answer_{{ answer.id }}_radio"
                                        value="{{ answer.id }}"
-                                       {% if answer == student_answer.answer %} checked {% endif %}
+                                       {% if answer == student_answer.answer %} chacked="checked" {% else %} {% endif %}
                                        {% if student_answer %} disabled {% endif %}>
-                                <label class="form-check-label" for="answer_radio">{{ answer.answer }}</label>
+                                <label class="form-check-label" for="answer_{{ answer.id }}_radio">{{ answer.answer }}</label>
                             </div>
                         </li>
+
+                        Ваш ответ {{ student_answer.answer }} | {{ answer }}
                         {% endfor %}
 
 
@@ -122,7 +127,6 @@
                 </div>
             </form>
 
-            {% endwith %}
             {% endwith %}
             {% endfor %}
 

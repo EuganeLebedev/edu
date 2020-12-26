@@ -1,7 +1,7 @@
 {% load user_filter %}
 <!-- Sidebar -->
 
-{% if course.module_set %}
+{% if course.get_module_set %}
 <div class="bg-light border-right" id="sidebar-wrapper">
     <div class="sidebar-heading">Модули курса</div>
     <div class="list-group list-group-flush">
@@ -13,8 +13,8 @@
         {% if class_module.moduletest %}
         <a href="{% url 'courses:module_test' class_module.moduletest.id %}"
            class="list-group-item list-group-item-action bg-light">{{ class_module.moduletest.title }}
-            {% with test_status=class_module.moduletest.studentmoduleteststatus_set.all|filter_for_user:user %}
-            {% if test_status.get.passed %}
+            {% with test_status=class_module.moduletest|test_is_passed:user %}
+            {% if test_status %}
 
             <span class="badge badge-success badge-pill">пройден</span>
             {% else %}

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.conf import settings
 # from django.template.defaultfilters import slugify
+from django.db.models import Prefetch
 from slugify import slugify
 from django.urls import reverse
 # Create your models here.
@@ -39,6 +40,11 @@ class Course(CourseAbstractModel):
     def get_absolute_url(self):
         return reverse('courses:course_detail', kwargs={'pk': self.pk})
 
+    def get_module_set(self):
+        return self.module_set
+
+
+
 
 
 class Module(CourseAbstractModel):
@@ -63,7 +69,8 @@ class ModuleTest(CourseAbstractModel):
         return reverse('courses:module_test', kwargs={'pk': self.pk})
 
     def get_questions(self):
-        return self.question_set.all().select_related()
+        return ModuleTest.objects.prefetch_related("question_set").get(pk=self.pk).question_set.all()
+        # return self.question_set.all()
 
 
 class Question(models.Model):
@@ -75,13 +82,16 @@ class Question(models.Model):
         return self.question
 
     def __str__(self):
-        return self.question
+        return f"{self.id} {self.question}"
 
 class Answer(models.Model):
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     answer = models.CharField(max_length=256, blank=False, null=False)
     is_correct = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.answer
 
 
 class StudentAnswer(models.Model):
