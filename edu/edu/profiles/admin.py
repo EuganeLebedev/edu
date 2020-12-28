@@ -20,4 +20,4 @@ admin.site.register(UserModel, CustomUserAdmin)
 
 @admin.register(StudentsGroupModel)
 class StudentsGroupAdmin(admin.ModelAdmin):
-    list_display = ['group_code', 'start_date']
+    list_display = ['group_code', 'start_date', 'get_student_counts']

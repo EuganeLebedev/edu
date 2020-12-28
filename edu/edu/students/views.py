@@ -5,10 +5,10 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.views.generic import TemplateView, RedirectView
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, FormView
-from .forms import StudentCreationForm, StudentAuthenticationForm
+from django.views.generic.edit import CreateView, FormView, UpdateView
+from .forms import StudentCreationForm, StudentAuthenticationForm, StudentsGroupCreateForm
 from profiles.models import StudentsGroupModel, UserModel
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 
 
 # Create your views here.
@@ -36,10 +36,6 @@ class StudentCreationView(CreateView):
         return super(StudentCreationView, self).get(request, *args, **kwargs)
 
 
-
-
-
-
 class StudentLoginView(LoginView):
     template_name = 'students/students_login.html'
     form_class = StudentAuthenticationForm
@@ -59,3 +55,25 @@ class GroupListView(PermissionRequiredMixin, ListView):
     paginate_by = 10
 
     permission_required = 'is_staff'
+
+    def get_queryset(self, **kwargs):
+        qs = super(GroupListView, self).get_queryset(**kwargs)
+        qs = qs.prefetch_related("usermodel_set").select_related('course')
+        return qs
+
+
+
+class GroupCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+
+    model = StudentsGroupModel
+    template_name = 'students/groups/group_create.html'
+    permission_required = 'is_staff'
+    form_class = StudentsGroupCreateForm
+
+class GroupUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+
+    model = StudentsGroupModel
+    template_name = 'students/groups/group_create.html'
+    permission_required = 'is_staff'
+    form_class = StudentsGroupCreateForm
+

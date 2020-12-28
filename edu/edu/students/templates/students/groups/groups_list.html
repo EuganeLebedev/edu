@@ -10,14 +10,19 @@
 
 
 {% for group in object_list %}
+<a class="text-dark" href="{% url 'students:group_update' group.pk %}">
+    <h3> {{ group.group_code }}
 
-<a class="text-dark" data-toggle="collapse" href="#collapse_{{ group.group_code }}" role="button" aria-expanded="false"
-   aria-controls="collapseExample">
-    <h1> {{ group.group_code }}</h1>
-
+    </h3>
 </a>
+<div>
+
+</div>
+<span class="badge badge-secondary"><a class="text-light" href="{% url 'courses:course_detail' group.course.pk %}">{{ group.course.title}}</a></span>
 <span class="badge badge-secondary">{{ group.start_date }}</span>
-<span class="badge badge-secondary"> <span class="fas fa-users"></span> {{ group.usermodel_set.count }}</span>
+<span class="badge badge-secondary" data-toggle="collapse" href="#collapse_{{ group.group_code }}" role="button" aria-expanded="false"
+   aria-controls="collapseExample"> <span class="fas fa-users"></span> {{ group.usermodel_set.count }}</span>
+
 {% if group.is_finished %}
 <span class="badge badge-success">Обучение закончено</span>
 {% endif %}
@@ -40,6 +45,10 @@
                 <span class="fas fa-id-card"></span>
             </a>
 
+            <div>
+                Успеваемость
+            </div>
+
             <div class="collapse" id="collapse_{{ group.group_code }}_{{ user.username }}">
                 <div class="card card-body">
                     {% if user.email %}
@@ -58,12 +67,15 @@
 
         </li>
     </ul>
+    <br>
     {% endfor %}
 </div>
-
+<br>
+<hr>
 
 {% endfor %}
-<hr>
+
+
 
 {% include "index/pagination.html" with url_name="students/groups" %}
 

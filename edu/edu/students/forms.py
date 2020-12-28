@@ -1,5 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
-from profiles.models import UserModel
+from django import forms
+from profiles.models import UserModel, StudentsGroupModel
+from courses.models import Course
+from django.contrib.admin.widgets import FilteredSelectMultiple
 
 class StudentCreationForm(UserCreationForm):
 
@@ -46,4 +49,32 @@ class StudentAuthenticationForm(AuthenticationForm):
             'password1': 'Пароль',
 
         }
+
+
+class StudentsGroupCreateForm(forms.ModelForm):
+    usermodel_set = forms.ModelMultipleChoiceField(queryset=UserModel.objects.filter(is_active=True), required=False,
+                                           widget=forms.CheckboxSelectMultiple)
+
+    class Meta:
+        model = StudentsGroupModel
+        fields = ['group_code', 'start_date', 'course', 'usermodel_set']
+
+        widgets = {
+            'start_date' : forms.DateInput(format=('%m/%d/%Y'), attrs={
+                'class': 'form-control', 'placeholder': 'Выберите дату начала', 'type': 'date'
+            }),
+            'group_code': forms.TextInput(attrs={
+                'class': 'form-control', 'placeholder': 'Код группы'
+        }),
+            'course': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+        }
+
+    def save(self, *args, **kwargs):
+
+        super().save(*args, **kwargs)
+        for usermodel in self.cleaned_data.get("usermodel_set"):
+            usermodel.group_code.add(self.instance)
+        return self.instance
 
