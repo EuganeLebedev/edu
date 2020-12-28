@@ -1,8 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from django import forms
 from profiles.models import UserModel, StudentsGroupModel
-from courses.models import Course
-from django.contrib.admin.widgets import FilteredSelectMultiple
+
 
 class StudentCreationForm(UserCreationForm):
 
@@ -13,14 +12,13 @@ class StudentCreationForm(UserCreationForm):
         self.fields['first_name'].required = True
         self.fields['last_name'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Фамилия'})
         self.fields['last_name'].required = True
-        self.fields['phone_number'].widget.attrs.update({'class': 'form-control',  'placeholder': 'Номер телефона'})
-        self.fields['password1'].widget.attrs.update({'class': 'form-control',  'placeholder': 'Пароль'})
-        self.fields['password2'].widget.attrs.update({'class': 'form-control',  'placeholder': 'Пароль повторно'})
-
+        self.fields['phone_number'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Номер телефона'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Пароль'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Пароль повторно'})
 
     class Meta:
         model = UserModel
-        fields = ['username', 'first_name', 'last_name','password1', 'password2', 'phone_number']
+        fields = ['username', 'first_name', 'last_name', 'password1', 'password2', 'phone_number']
         labels = {
             'username': 'Имя пользователя',
             'first_name': 'Имя',
@@ -30,11 +28,10 @@ class StudentCreationForm(UserCreationForm):
             'phone_number': 'Номер телефона'
 
         }
-        #hepl_texts = {}
+        # hepl_texts = {}
 
 
 class StudentAuthenticationForm(AuthenticationForm):
-
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -60,12 +57,12 @@ class StudentsGroupCreateForm(forms.ModelForm):
         fields = ['group_code', 'start_date', 'course', 'usermodel_set']
 
         widgets = {
-            'start_date' : forms.DateInput(format=('%m/%d/%Y'), attrs={
+            'start_date': forms.DateInput(format=('%m/%d/%Y'), attrs={
                 'class': 'form-control', 'placeholder': 'Выберите дату начала', 'type': 'date'
             }),
             'group_code': forms.TextInput(attrs={
                 'class': 'form-control', 'placeholder': 'Код группы'
-        }),
+            }),
             'course': forms.Select(attrs={
                 'class': 'form-control'
             }),
@@ -78,3 +75,11 @@ class StudentsGroupCreateForm(forms.ModelForm):
             usermodel.group_code.add(self.instance)
         return self.instance
 
+
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print('PK', self.instance.pk)
+        if self.instance.pk:
+            initial_usermodel_set = self.instance.usermodel_set.values_list('pk', flat=True)
+            self.initial['usermodel_set'] = initial_usermodel_set
