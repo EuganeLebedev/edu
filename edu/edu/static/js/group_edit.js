@@ -52,15 +52,12 @@ $(document).ready(function() {
 
 
 
-		$(".all-users.user-add").click(function(){
-        let clickedItem = $(this);
-        let my_answer = {};
-        let tableRow = $(this).parents('tr').html();
+//    $(".all-users.user-add").click(function(){
+    $(document).on('click', '.all-users.user-add', function(){
+    let clickedItem = $(this);
+    let my_answer = {};
+    let tableRow = $(this).parents('tr');
 
-        $(this).parents('tr').addClass('test-class')
-        $(this).parents('tr').remove()
-
-        $('.table.group-users tbody').append('<tr>' + tableRow + '</tr>')
 
         $.ajax({
             url: '',
@@ -68,27 +65,42 @@ $(document).ready(function() {
             data: {
                 ajax_user_id: $(this).parents('tr').children('th').text(),
                 action: 'add',
-//                my_answer: JSON.stringify(my_answer)
             },
             success: function(response) {
-//                $(this).text(response.seconds)
-//
-//                if (response.checked_answer.is_correct) {
-//                    console.log('+')
-//                    clickedItem.parent().find("div.alert").remove()
-//                    clickedItem.parent().append('<div class="alert alert-success" role="alert">Правильный ответ</div>')
-//
-//                }
-//                else {
-//                    console.log('-')
-//                }
-//
-//                clickedItem.parent().find("button.answer").remove()
-//
-//                answer_list = []
-//                my_answer = {}
+                clickedItem.parents('tr').remove();
+                tableRow.children('td.action').remove();
+                tableRow.append("<td class=\"action\"><button class=\"btn btn-sm btn-danger group-users user-remove\">Убрать</button></td>")
+                $('.table.group-users tbody').append('<tr>' + tableRow.html() + '</tr>');
+
             }
         });
-    })
+    });
+
+//    $(".group-users.user-remove").click(function(){
+    $(document).on('click', '.group-users.user-remove', function(){
+    let clickedItem = $(this);
+    let my_answer = {};
+    let tableRow = $(this).parents('tr');
+
+
+        $.ajax({
+            url: '',
+            type: 'get',
+            data: {
+                ajax_user_id: $(this).parents('tr').children('th').text(),
+                action: 'del',
+            },
+            success: function(response) {
+                clickedItem.parents('tr').remove();
+                tableRow.children('td.action').remove();
+                tableRow.append("<td class=\"action\"><button class=\"btn btn-sm btn-success all-users user-add\">Добавить</button></td>")
+                $('.table.all-users tbody').append('<tr>' + tableRow.html() + '</tr>');
+
+            }
+        });
+    });
+
+
+
 
 });

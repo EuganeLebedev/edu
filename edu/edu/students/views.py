@@ -99,8 +99,11 @@ class GroupUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
                 group = self.get_object()
                 if request.GET.get('action') == 'add':
                     user_object.group_code.add(group)
+                elif request.GET.get('action') == 'del':
+                    print('DeL')
+                    user_object.group_code.remove(group)
             return JsonResponse(
-                {'seconds': 1, 'checked_answer': '', 'progress': 'progress', 'answer_count': 'answer_count'},
+                {},
                 status=200)
 
         return super().get(request, *args, **kwargs)
