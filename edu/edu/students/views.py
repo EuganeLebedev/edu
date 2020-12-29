@@ -73,7 +73,21 @@ class GroupCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 class GroupUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     model = StudentsGroupModel
-    template_name = 'students/groups/group_create.html'
+    template_name = 'students/groups/group_update.html'
     permission_required = 'is_staff'
     form_class = StudentsGroupCreateForm
+
+    def get_queryset(self, **kwargs):
+        qs = super(GroupUpdateView, self).get_queryset(**kwargs)
+        qs =qs.prefetch_related("usermodel_set").select_related('course')
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        group_users = context.get('object').usermodel_set.all().order_by('id')
+        context["group_users"] = group_users
+
+        context["all_users"] = UserModel.objects.exclude(id__in=group_users).order_by('id')
+
+        return context
 

@@ -1,0 +1,116 @@
+{% extends 'index/base.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+
+    {% block style %}
+<style>
+ body{
+  padding:20px 20px;
+}
+
+.results tr[visible='false'],
+.no-result{
+  display:none;
+}
+
+.results tr[visible='true']{
+  display:table-row;
+}
+
+.counter{
+  padding:8px;
+  color:#ccc;
+}
+</style>
+    {% endblock %}
+
+{% block title %}
+Група {{ object.group_code }}
+{% endblock %}
+
+{% block body %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-primary btn-sm" value="Сохранить">
+    </form>
+
+
+<hr>
+<br>
+<h3>Пользователя группы</h3>
+<div class="form-group pull-right">
+    <input type="text" class="search group-users form-control" placeholder="Поиск">
+</div>
+<span class="counter pull-right"></span>
+<table class="table table-hover results group-users">
+  <thead>
+    <tr>
+        <th>ID</th>
+        <th class="col-md-5 col-xs-5">Имя пользователя</th>
+        <th class="col-md-4 col-xs-4">Телефон</th>
+        <th class="col-md-3 col-xs-3">E-mail</th>
+        <th class="col-md-3 col-xs-3"></th>
+    </tr>
+    <tr class="warning no-result group-users">
+      <td colspan="4"><i class="fa fa-warning"></i> No result</td>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for user in group_users %}
+    <tr>
+      <th scope="row">{{ user.id }}</th>
+      <td>{{ user.username }}</td>
+      <td>{{ user.phone_number }}</td>
+      <td>{{ user.email }}</td>
+        <td><button class="btn btn-sm btn-danger">Убрать</button></td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+
+<br>
+<h3>Все пользователи</h3>
+<div class="form-group pull-right">
+    <input type="text" class="search all-users form-control" placeholder="Поиск">
+</div>
+<span class="counter pull-right"></span>
+<table class="table table-hover results all-users">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th class="col-md-5 col-xs-5">Имя пользователя</th>
+        <th class="col-md-4 col-xs-4">Телефон</th>
+        <th class="col-md-3 col-xs-3">E-mail</th>
+        <th class="col-md-3 col-xs-3"></th>
+    </tr>
+    <tr class="warning no-result all-users">
+        <td colspan="4"><i class="fa fa-warning"></i> No result</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for user in all_users %}
+    <tr>
+        <th scope="row">{{ user.id }}</th>
+        <td>{{ user.username }}</td>
+        <td>{{ user.phone_number }}</td>
+        <td>{{ user.email }}</td>
+        <td><button class="btn btn-sm btn-success">Добавить</button></td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+{% endblock %}
+
+
+{% block scriptarea %}
+<script src="{% static 'js/group_edit.js' %}"></script>
+
+
+{% endblock %}

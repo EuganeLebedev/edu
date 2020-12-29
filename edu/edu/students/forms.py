@@ -54,7 +54,7 @@ class StudentsGroupCreateForm(forms.ModelForm):
 
     class Meta:
         model = StudentsGroupModel
-        fields = ['group_code', 'start_date', 'course', 'usermodel_set']
+        fields = ['group_code', 'start_date', 'course', ]
 
         widgets = {
             'start_date': forms.DateInput(format=('%m/%d/%Y'), attrs={
@@ -67,19 +67,18 @@ class StudentsGroupCreateForm(forms.ModelForm):
                 'class': 'form-control'
             }),
         }
-
-    def save(self, *args, **kwargs):
-
-        super().save(*args, **kwargs)
-        for usermodel in self.cleaned_data.get("usermodel_set"):
-            usermodel.group_code.add(self.instance)
-        return self.instance
-
-
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        print('PK', self.instance.pk)
-        if self.instance.pk:
-            initial_usermodel_set = self.instance.usermodel_set.values_list('pk', flat=True)
-            self.initial['usermodel_set'] = initial_usermodel_set
+    #
+    # def save(self, *args, **kwargs):
+    #
+    #     super().save(*args, **kwargs)
+    #     for usermodel in self.cleaned_data.get("usermodel_set"):
+    #         usermodel.group_code.add(self.instance)
+    # #     return self.instance
+    #
+    #
+    #
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     if self.instance.pk:
+    #         initial_usermodel_set = self.instance.usermodel_set.values_list('pk', flat=True)
+    #         self.initial['usermodel_set'] = initial_usermodel_set
