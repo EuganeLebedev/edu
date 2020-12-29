@@ -61,22 +61,17 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
         # 1. Работа с несколькими правильными ответами
 
         if request.is_ajax():
-            print(request.GET.get('my_answer'))
             answer_list_deserialized = request.GET.get('my_answer')
             return_answers = {}
             if answer_list_deserialized:
                 answer = json.loads(answer_list_deserialized)
-                print(f'{answer}', type(answer))
                 answer_model = models.Answer.objects.get(id=answer.get('answer_id'))
                 question_model = models.Question.objects.get(id=answer.get('question_id'))
-
-                print(f'{answer_model.is_correct}')
                 return_answers.update({'answer_id': answer_model.id, 'is_correct': answer_model.is_correct})
                 if request.user.is_authenticated:
 
                     try:
                         obj = models.StudentAnswer.objects.get(user=request.user, question=question_model)
-                        print('EXIST')
                         obj.answer = answer_model
                         obj.save()
                     except models.StudentAnswer.DoesNotExist:
@@ -89,9 +84,7 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
                     answer_count = models.StudentAnswer.objects.filter(user=self.request.user,
                                                                        question__in=questions_set.all()).count()
 
-                    print(F"COUNT {questions_set_count} / {answer_count}")
                     progress = int(int(answer_count) / int(questions_set_count) * 100)
-                    print(f"PROGRESS {progress}")
                     module_status = models.StudentModuleTestStatus.objects.get(user=self.request.user,
                                                                                module_test=question_model.module_test)
                     if answer_count == questions_set_count:

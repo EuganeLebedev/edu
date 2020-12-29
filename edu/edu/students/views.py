@@ -91,3 +91,17 @@ class GroupUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
         return context
 
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            ajax_user_id = request.GET.get('ajax_user_id')
+            user_object = UserModel.objects.get(pk=ajax_user_id)
+            if ajax_user_id:
+                group = self.get_object()
+                if request.GET.get('action') == 'add':
+                    user_object.group_code.add(group)
+            return JsonResponse(
+                {'seconds': 1, 'checked_answer': '', 'progress': 'progress', 'answer_count': 'answer_count'},
+                status=200)
+
+        return super().get(request, *args, **kwargs)
+
