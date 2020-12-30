@@ -29,13 +29,25 @@
 {% endblock %}
 
 {% block body %}
-    <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.media }}
-        {{ form|crispy }}
-        <br>
-        <input type="submit" class="btn btn-primary btn-sm" value="Сохранить">
-    </form>
+<div>
+    <h1>{{ object.group_code }}</h1>
+    <h3>{{ object.course.title }}</h3>
+    <p>Дата начала: {{ object.start_date }}</p>
+    {% if object.is_finished %}
+    <span class="badge badge-success">Обучение закончено</span>
+    {% endif %}
+</div>
+<br>
+
+
+<a class="btn btn-primary btn-sm" href="{% url 'students:group_update' object.pk %}">Редактировать</a>
+<a class="btn btn-primary btn-sm" href="{% url 'students:group_status_change' object.pk %}">
+    {% if object.is_finished %}
+        Открыть
+    {% else %}
+        Закрыть
+    {% endif %}
+</a>
 
 
 <hr>

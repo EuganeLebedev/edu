@@ -10,10 +10,8 @@
 
 
 {% for group in object_list %}
-<a class="text-dark" href="{% url 'students:group_update' group.pk %}">
-    <h3> {{ group.group_code }}
-
-    </h3>
+<a class="text-dark" href="{% url 'students:group_detail' group.pk %}">
+    <h3> {{ group.group_code }}</h3>
 </a>
 <div>
 

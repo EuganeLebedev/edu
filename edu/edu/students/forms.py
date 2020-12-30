@@ -49,8 +49,8 @@ class StudentAuthenticationForm(AuthenticationForm):
 
 
 class StudentsGroupCreateForm(forms.ModelForm):
-    usermodel_set = forms.ModelMultipleChoiceField(queryset=UserModel.objects.filter(is_active=True), required=False,
-                                           widget=forms.CheckboxSelectMultiple)
+    # usermodel_set = forms.ModelMultipleChoiceField(queryset=UserModel.objects.filter(is_active=True), required=False,
+    #                                        widget=forms.CheckboxSelectMultiple)
 
     class Meta:
         model = StudentsGroupModel
