@@ -1,7 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
-from django.views.generic import DetailView, ListView
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import DetailView, ListView, TemplateView
+from profiles.models import StudentsGroupModel
+from courses.models import StudentAnswer, Question, ModuleTest, Module
 import json
 
 from . import models
@@ -105,3 +108,21 @@ class ModuleTestDetailView(LoginRequiredMixin, DetailView):
         return super().get(request, *args, **kwargs)
 
 
+class StudentProgress(TemplateView):
+    template_name = 'courses/student_progress.html'
+
+    def get_context_data(self, group_code=None, **kwargs):
+        context = super(StudentProgress, self).get_context_data(**kwargs)
+        print(kwargs, group_code)
+        course = get_object_or_404(StudentsGroupModel, group_code=group_code).course
+        module_set = Module.objects.filter(course=course)
+        module_test_set = ModuleTest.objects.filter(module__in=module_set)
+        question_set = Question.objects.filter(module_test__in=module_test_set)
+        answer_set = StudentAnswer.objects.select_related('answer__question', 'user').filter(Q(user=self.request.user), Q(question__in=question_set))
+        #queryset = models.StudentModuleTestStatus.objects.select_related('module_test__module__course').filter(user=self.request.user,
+        #                                                                                       module_test__module__course=course,
+        #                                                                                        module_test__question__studentanswer__user=self.request.user)
+        #context['test'] = queryset
+        context['answer_set'] = answer_set
+
+        return context

@@ -1,0 +1,52 @@
+{% extends 'index/base.html'%}
+
+{% block title %}
+{{ course.title }}
+
+{% endblock %}
+
+
+{% block body %}
+<h1>Detail</h1>
+
+{% comment %}
+{{ test.title }}
+{% for object in test %}
+<h2>{{ object.module_test.title}}</h2>
+{{ object.passed }}<br>
+    {% for question in object.module_test.question_set.all %}
+        {% for answer in question.answer_set.all %}
+            <hr>
+            {% for user_answer in answer.studentanswer_set.all %}
+                {{ question.question| safe }}<br>
+                {{ user_answer.user }} <br>
+                {{ user_answer.answer.is_correct }} <br>
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+{% endfor %}
+{% endcomment %}
+
+{% for answer in answer_set %}
+    {{ answer.answer.question | safe }}<br>
+    {{ answer.user }}<br>
+    {{ answer.answer.is_correct }}<br>
+<hr>
+{% endfor %}
+
+{% endblock %}
+
+
+
+
+{% block scriptarea %}
+<!-- Menu Toggle Script -->
+<script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+
+
+</script>
+{% endblock %}

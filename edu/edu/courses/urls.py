@@ -7,5 +7,6 @@ urlpatterns = [
     path('<int:pk>', views.CourseDetailView.as_view(), name='course_detail'),
     path('', views.CoursesListView.as_view(), name='courses_list'),
     path('module/<int:pk>', views.ModuleDetailView.as_view(), name='module_detail'),
-    path('test/<int:pk>', views.ModuleTestDetailView.as_view(), name='module_test')
+    path('test/<int:pk>', views.ModuleTestDetailView.as_view(), name='module_test'),
+    path('group/<int:group_code>/myprogress', views.StudentProgress.as_view(), name='progress')
 ]

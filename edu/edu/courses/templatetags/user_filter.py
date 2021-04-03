@@ -1,6 +1,6 @@
 from django import template
 from courses.models import StudentModuleTestStatus, StudentAnswer
-
+from django.core.exceptions import ObjectDoesNotExist
 register = template.Library()
 
 
@@ -25,8 +25,10 @@ def filter_for_user(model, user):
 @register.filter(name="test_is_passed")
 def test_is_passed(module_test, user):
     print("ID", module_test.id)
-
-    return StudentModuleTestStatus.objects.get(module_test=module_test, user=user).passed
+    try:
+        return StudentModuleTestStatus.objects.get(module_test=module_test, user=user).passed
+    except ObjectDoesNotExist:
+        return False
 
 
 @register.filter(name="get_student_answers_for_user")
@@ -46,3 +48,5 @@ def get_student_answer_for_user(question, user):
         return query_object
     except StudentAnswer.DoesNotExist:
         return None
+
+

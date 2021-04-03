@@ -19,7 +19,6 @@ class CourseAbstractModel(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-
         return super().save(*args, **kwargs)
 
     class Meta:
@@ -106,4 +105,7 @@ class StudentModuleTestStatus(models.Model):
     user = models.ForeignKey(UserModel, on_delete=models.CASCADE)
     module_test = models.ForeignKey(ModuleTest, on_delete=models.CASCADE)
     passed = models.BooleanField(default=False)
+
+    def str(self):
+        return f"{self.user.username} is {self.passed}"
 
